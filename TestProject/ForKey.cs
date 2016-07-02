@@ -21,18 +21,18 @@ namespace TestProject
 
         public IEntity Entity { get; set; }
 
-        public string GetPropertyValue()
+        public T GetPropertyValue<T>()
         {
             try
             {
-                return Entity.GetType().GetProperty(PropertyName).GetValue(Entity).ToStringOrNull();
+                return (T)Entity.GetType().GetProperty(PropertyName).GetValue(Entity);
             }
             catch (Exception ex)
             {
                 throw new Exception("无法获取属性：" + PropertyName + "，在类型：" + Entity.GetType().ToString() + "中。 详细见内部异常。", ex);
             }
         }
-        public void SetPropertyValue(string tid)
+        public void SetPropertyValue<T>(T tid)
         {
             try
             {

@@ -17,9 +17,9 @@ namespace TestProject
                 CreatedOn = DateTime.Now
             };
             var forKey = new ForKey(TableType.Default,"Name",et);
-            Console.WriteLine(forKey.GetPropertyValue());
+            Console.WriteLine(forKey.GetPropertyValue<string>());
             forKey.SetPropertyValue("juhntao");
-            Console.WriteLine(forKey.GetPropertyValue());
+            Console.WriteLine(forKey.GetPropertyValue<string>());
             Console.ReadKey();
         }
     }
