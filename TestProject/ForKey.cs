@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,28 +21,40 @@ namespace TestProject
         public string PropertyName { get; set; }
 
         public IEntity Entity { get; set; }
-
-        public T GetPropertyValue()
+        public T PropertyValue
         {
-            try
+            get
             {
-                return (T)Entity.GetType().GetProperty(PropertyName).GetValue(Entity);
+                var propertyInfo = GetPropertyInfo();
+                if(propertyInfo == null)
+                {
+                    return default(T);
+                }
+                return (T)propertyInfo.GetValue(Entity);
             }
-            catch (Exception ex)
+            set
             {
-                throw new Exception("无法获取属性：" + PropertyName + "，在类型：" + Entity.GetType().ToString() + "中。 详细见内部异常。", ex);
+                GetPropertyInfo()?.SetValue(Entity, value);
             }
         }
-        public void SetPropertyValue(T tid)
+
+        private PropertyInfo propertyInfo;
+        private PropertyInfo GetPropertyInfo()
         {
+            if (string.IsNullOrWhiteSpace(PropertyName) || Entity == null)
+            {
+                throw new ArgumentException("PropertyName 或 Entity 不能为空");
+            }
             try
             {
-                Entity.GetType().GetProperty(PropertyName).SetValue(Entity, tid);
+                propertyInfo = propertyInfo ?? Entity.GetType().GetProperty(PropertyName);
             }
             catch (Exception ex)
             {
                 throw new Exception("无法获取属性：" + PropertyName + "，在类型：" + Entity.GetType().ToString() + "中。 详细见内部异常。", ex);
             }
+            return propertyInfo;
+            
         }
     }
 
@@ -64,7 +77,7 @@ namespace TestProject
         public DateTime CreatedOn { get; set; }
     }
 
-    public static class ObjctExtend
+    public static class ObjectExtend
     {
         public static string ToStringOrNull(this object data)
         {
