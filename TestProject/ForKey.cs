@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestProject
 {
-    public class ForKey
+    public class ForKey<T>
     {
         public ForKey(TableType forKeyTableType, string forKeyPropertyName, IEntity currentEntity)
         {
@@ -21,7 +21,7 @@ namespace TestProject
 
         public IEntity Entity { get; set; }
 
-        public T GetPropertyValue<T>()
+        public T GetPropertyValue()
         {
             try
             {
@@ -32,7 +32,7 @@ namespace TestProject
                 throw new Exception("无法获取属性：" + PropertyName + "，在类型：" + Entity.GetType().ToString() + "中。 详细见内部异常。", ex);
             }
         }
-        public void SetPropertyValue<T>(T tid)
+        public void SetPropertyValue(T tid)
         {
             try
             {

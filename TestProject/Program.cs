@@ -16,10 +16,10 @@ namespace TestProject
                 Name = "juhntao@live.com",
                 CreatedOn = DateTime.Now
             };
-            var forKey = new ForKey(TableType.Default,"Name",et);
-            Console.WriteLine(forKey.GetPropertyValue<string>());
+            var forKey = new ForKey<string>(TableType.Default,"Name",et);
+            Console.WriteLine(forKey.GetPropertyValue());
             forKey.SetPropertyValue("juhntao");
-            Console.WriteLine(forKey.GetPropertyValue<string>());
+            Console.WriteLine(forKey.GetPropertyValue());
             Console.ReadKey();
         }
     }
