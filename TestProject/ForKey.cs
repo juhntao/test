@@ -76,16 +76,4 @@ namespace TestProject
         public string Name { get; set; }
         public DateTime CreatedOn { get; set; }
     }
-
-    public static class ObjectExtend
-    {
-        public static string ToStringOrNull(this object data)
-        {
-            if (data == null)
-            {
-                return null;
-            }
-            return data.ToString();
-        }
-    }
 }
